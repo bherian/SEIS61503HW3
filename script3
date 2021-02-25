@@ -1,6 +1,16 @@
 #!/bin/bash
 # assign variables
 ACTION=${1}
+version="1.0.1"
+function	show_version()	{
+
+echo	$version
+}
+
+function	delete_file()	{
+
+rm	"${1}-12345"
+}
 
 function create_file()  {
 
@@ -9,12 +19,17 @@ touch "${1}-12345"
 
 function display_help() {
 cat << EOF
-Usage: ${0} {-c|--create|-h|--help}  <filename>
+Usage: ${0} {-v|--version|-d|--delete|-c|--create|-h|--help}  <filename>
 
 OPTIONS:
+	-v | --version Show version of the script
+	-d | --delete Delete the file
+	-c | --Create a new file
 	-h | --help Display the command help
 
 Examples:
+	-v | --version  Show version of the script
+	-d | --delete 	Delete the file
 	-c | --create	Create a new file
 	-h | --help	Display the command help
 
@@ -26,6 +41,11 @@ Examples:
 	Display help:
 		$ ${0} -h
 
+	Delete file:
+		$ ${0} -d foo.txt
+
+	Show version:
+		$ ${0} -v 
 EOF
 }
 
@@ -35,6 +55,12 @@ case "$ACTION" in
 		;;
 	-c|--create)
 		create_file "${2:-server}"
+		;;
+	-d|--delete)
+		delete_file "${2:-server}"
+		;;
+	-v|--version)
+		show_version 
 		;;
 	*)
 	echo "Usage ${0} {-c|-h}"
